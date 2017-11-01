@@ -41,6 +41,25 @@ func (m msr) Delta(o msr) msr {
 	return m
 }
 
+func (m msr) Positive() msr {
+	if m.V1 < 0 {
+		m.V1 = 0
+	}
+	if m.Authed < 0 {
+		m.Authed = 0
+	}
+	if m.Plain < 0 {
+		m.Plain = 0
+	}
+	if m.Expired < 0 {
+		m.Expired = 0
+	}
+	if m.Error < 0 {
+		m.Error = 0
+	}
+	return m
+}
+
 type msrErr struct {
 	m msr
 	e error
