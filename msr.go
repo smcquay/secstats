@@ -40,3 +40,8 @@ func (m msr) Delta(o msr) msr {
 	m.V1 -= o.V1
 	return m
 }
+
+type msrErr struct {
+	m msr
+	e error
+}

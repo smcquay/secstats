@@ -25,24 +25,29 @@ func fetch(ctx context.Context, tick time.Duration, targets []string) chan msr {
 				close(msrs)
 				return
 			case <-t.C:
-				ms := make(chan msr)
+				ms := make(chan msrErr)
 				for _, target := range targets {
 					go func(t string) {
 						cx, cancel := context.WithTimeout(ctx, 2*time.Second)
 						defer cancel()
 						m, err := getMetrics(cx, t)
-						if err != nil {
-							log.Printf("%v", err)
-						}
-						ms <- m
+						ms <- msrErr{m, err}
 					}(target)
 				}
 
+				errs := false
 				r := msr{}
 				for range targets {
-					r.Add(<-ms)
+					m := <-ms
+					if m.e != nil {
+						log.Printf("%v", m.e)
+						errs = true
+					}
+					r.Add(m.m)
 				}
-				msrs <- r
+				if !errs {
+					msrs <- r
+				}
 			}
 		}
 	}()
