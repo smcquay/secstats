@@ -13,7 +13,7 @@ type msr struct {
 }
 
 func (m msr) String() string {
-	return fmt.Sprintf("v1: %5d, auth: %5d, plain: %5d, expired: %5d, error: %5d",
+	return fmt.Sprintf("v1: %8d, auth: %8d, plain: %8d, expired: %8d, error: %8d",
 		m.V1,
 		m.Authed,
 		m.Plain,

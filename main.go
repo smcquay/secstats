@@ -33,6 +33,6 @@ func main() {
 		last = m
 		o += float64(d.V1)
 		n += float64(d.Authed)
-		log.Printf("(%5.2f) %+v", n/(n+o), d.Positive())
+		log.Printf("(%5.4f) %+v", n/(n+o), d.Positive())
 	}
 }
